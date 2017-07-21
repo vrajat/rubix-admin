@@ -16,9 +16,9 @@ def load_config(config_args):
 
     config = ConfigParser.SafeConfigParser()
     files_read = config.read(config_candidates)
-#    if len(files_read) == 0:
-#        logging.fatal("No configuration files found. Did you create ~/.radminrc ?")
-#        sys.exit(3)
+    if len(files_read) == 0:
+        logging.fatal("No configuration files found. Did you create ~/.radminrc ?")
+        sys.exit(3)
     return config
 
 

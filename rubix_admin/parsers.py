@@ -1,6 +1,7 @@
 import argparse
+
 from rubix_admin import __version__
-from installer.installer import Installer
+from rubix_admin.installer import Installer
 
 
 def setup_parsers():
