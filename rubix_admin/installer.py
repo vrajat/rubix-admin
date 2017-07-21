@@ -51,7 +51,7 @@ class Installer:
 
     @classmethod
     def _rpm_install(cls, args):
-        return sudo('rpm -i %s %s' %
+        return sudo('rpm -U %s %s' %
                     (args.rpm_args,
                      os.path.join(args.config["remote_packages_path"],
                                   os.path.basename(args.rpm))))
