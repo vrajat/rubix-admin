@@ -7,7 +7,8 @@ import sys
 class AdminConfig:
     default_path = "~/.radminrc"
     defaults = {
-        "remote_packages_path": "/tmp/rubix_rpms"
+        "remote_packages_path": "/tmp/rubix_rpms",
+        "hosts": ["localhost"]
     }
 
     @classmethod

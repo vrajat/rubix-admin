@@ -19,12 +19,14 @@ class Installer:
                                                        help="Install from RPM")
         cls.install_parser.add_argument("-r", "--rpm", required=True,
                                         help="Path to RPM file")
+        cls.install_parser.add_argument("-a", "--rpm-args", default="",
+                                        help="Arguments to rpm command")
         cls.install_parser.set_defaults(func=cls.install_cmd)
 
     @classmethod
     def install_cmd(cls, args):
         logging.info("Installing %s" % args.rpm)
-        return execute(cls.install, args, hosts="localhost")
+        return execute(cls.install, args, hosts=args.config.hosts)
 
     @classmethod
     def install(cls, args):
@@ -49,6 +51,7 @@ class Installer:
 
     @classmethod
     def _rpm_install(cls, args):
-        return sudo('rpm -i %s' %
-                    (os.path.join(args.config.remote_packages_path,
+        return sudo('rpm -i %s %s' %
+                    (args.rpm_args,
+                     os.path.join(args.config.remote_packages_path,
                                   os.path.basename(args.rpm))))
