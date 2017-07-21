@@ -33,7 +33,7 @@ class Installer:
 
     @classmethod
     def _scp(cls, args):
-        remote_packages_path = args.config.get("default", "remote_packages_path")
+        remote_packages_path = args.config.remote_packages_path
         if not os.path.isfile(args.rpm):
             abort('RPM file not found at %s.' % args.rpm)
 
@@ -50,5 +50,5 @@ class Installer:
     @classmethod
     def _rpm_install(cls, args):
         return sudo('rpm -i %s' %
-                    (os.path.join(args.config.get("default", "remote_packages_path"),
+                    (os.path.join(args.config.remote_packages_path,
                                   os.path.basename(args.rpm))))
