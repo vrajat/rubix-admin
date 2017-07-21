@@ -7,6 +7,7 @@ from fabric.state import env
 from fabric.tasks import execute
 from fabric.utils import abort
 
+
 class Installer:
     @classmethod
     def setup_parsers(cls, sub_parser):
