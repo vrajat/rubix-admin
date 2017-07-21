@@ -24,24 +24,25 @@ class Installer:
     @classmethod
     def install_cmd(cls, args):
         logging.info("Installing %s" % args.rpm)
-        return cls.execute(cls.install, args, hosts="localhost")
+        return execute(cls.install, args, hosts="localhost")
 
     @classmethod
     def install(cls, args):
-        _scp(args)
-        _rpm_install(args)
+        cls._scp(args)
+        cls._rpm_install(args)
 
     @classmethod
     def _scp(cls, args):
+        remote_packages_path = args.config.get("default", "remote_packages_path")
         if not os.path.isfile(args.rpm):
             abort('RPM file not found at %s.' % args.rpm)
 
         logging.info("Deploying rpm on %s" % env.host)
-        sudo('mkdir -p ' + args.config.remote_package_path)
-        ret_list = put(rpm, args.config.remote_packages_path, use_sudo=True)
+        sudo('mkdir -p ' + remote_packages_path)
+        ret_list = put(args.rpm, remote_packages_path, use_sudo=True)
         if not ret_list.succeeded:
             logging.warn("Failure during put. Now using /tmp as temp dir")
-            ret_list = put(rpm, args.config.remote_packages_path,
+            ret_list = put(args.rpm, remote_packages_path,
                            use_sudo=True, temp_dir='/tmp')
         if ret_list.succeeded:
             logging.info("Package deployed successfully on: %s " % env.host)
@@ -49,5 +50,5 @@ class Installer:
     @classmethod
     def _rpm_install(cls, args):
         return sudo('rpm -i %s' %
-                    (os.path.join(arg.config.constants.remote_packages_path,
-                                  os.path.basename(rpm))))
+                    (os.path.join(args.config.get("default", "remote_packages_path"),
+                                  os.path.basename(args.rpm))))

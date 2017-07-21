@@ -5,7 +5,7 @@ from rubix_admin.installer import Installer
 
 
 def setup_parsers():
-    config_parser = argparse.ArgumentParser(description="Mojave Data Warehouse.", add_help=False)
+    config_parser = argparse.ArgumentParser(description="Rubix Admin Tool.", add_help=False)
     config_parser.add_argument("-c", "--config", help="Path to configuration file", metavar="FILE")
     config_parser.add_argument("-v", "--version", action='version', version=__version__)
 
