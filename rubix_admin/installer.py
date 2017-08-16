@@ -50,11 +50,10 @@ class Installer:
 
     @classmethod
     def _rpm_install(cls, args):
-            logging.warn("in rpm install")
-        rpm_output = sudo('rpm -U %s %s' %
-                    (args.rpm_args,
-                     os.path.join(args.config["remote_packages_path"],
-                                  os.path.basename(args.rpm))))
+        sudo('rpm -U %s %s' %
+             (args.rpm_args,
+              os.path.join(args.config["remote_packages_path"],
+                           os.path.basename(args.rpm))))
 
         sudo("cp -a /usr/lib/rubix/lib/* /usr/lib/presto/lib/plugin/hive-hadoop2/")
         sudo("cp -a /usr/lib/rubix/lib/* /usr/lib/hadoop/lib/")
