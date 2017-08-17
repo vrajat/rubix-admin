@@ -25,6 +25,7 @@ class Installer:
 
     @classmethod
     def install_cmd(cls, args):
+        logging.info("Installing %s" % args.rpm)
         return execute(cls.install, args, hosts=args.config["hosts"])
 
     @classmethod
