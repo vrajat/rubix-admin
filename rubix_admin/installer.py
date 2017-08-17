@@ -5,7 +5,7 @@ from fabric.contrib.files import append
 from fabric.state import env
 from fabric.tasks import execute
 from fabric.utils import abort
-
+from fabric.api import settings
 
 class Installer:
     @classmethod
@@ -31,6 +31,7 @@ class Installer:
     def install(cls, args):
         cls._scp(args)
         cls._rpm_install(args)
+        cls._rubix_op(args)
 
     @classmethod
     def _scp(cls, args):
@@ -50,15 +51,25 @@ class Installer:
 
     @classmethod
     def _rpm_install(cls, args):
-        sudo('rpm -U %s %s' %
-             (args.rpm_args,
-              os.path.join(args.config["remote_packages_path"],
-                           os.path.basename(args.rpm))))
+         sudo('rpm -U %s %s' %
+                (args.rpm_args,
+                 os.path.join(args.config["remote_packages_path"],
+                              os.path.basename(args.rpm))))
 
+    @classmethod
+    def _rubix_op(cls, args):
         sudo("cp -a /usr/lib/rubix/lib/* /usr/lib/presto/lib/plugin/hive-hadoop2/")
         sudo("cp -a /usr/lib/rubix/lib/* /usr/lib/hadoop/lib/")
-        sudo("mkdir -p /media/ephemeral0")
+        sudo("mkdir -p /mnt/rubix/")
+        sudo("mkdir -p /var/lib/rubix/cache")
+        with settings(warn_only=True):
+          sudo("ln -s /var/lib/rubix/cache /mnt/rubix/")
+        count = 0;
+        while count < 5:
+          sudo("mkdir -p /var/lib/rubix/cache/data%s" % count)
+          count += 1
 
         append("/usr/lib/presto/etc/catalog/hive.properties","hive.fs.s3n.impl=com.qubole.rubix.presto.CachingPrestoS3FileSystem", True)
         append("/usr/lib/presto/etc/catalog/hive.properties","hive.fs.s3.impl=com.qubole.rubix.presto.CachingPrestoS3FileSystem", True)
         append("/usr/lib/presto/etc/catalog/hive.properties","hive.fs.s3a.impl=com.qubole.rubix.presto.CachingPrestoS3FileSystem", True)
+        sudo("python /usr/lib/rubix/bin/configure.py")
