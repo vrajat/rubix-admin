@@ -62,7 +62,7 @@ class Installer:
 
     @classmethod
     def _rubix_op(cls, args):
-        sudo("cp -a /usr/lib/rubix/lib/* /usr/lib/presto/lib/plugin/hive-hadoop2/")
+        sudo("cp -a /usr/lib/rubix/lib/* /usr/lib/presto/plugin/hive-hadoop2/")
         sudo("cp -a /usr/lib/rubix/lib/* /usr/lib/hadoop/lib/")
         sudo("mkdir -p /mnt/rubix/")
         sudo("mkdir -p /var/lib/rubix/cache")
@@ -77,5 +77,6 @@ class Installer:
         append("/usr/lib/presto/etc/catalog/hive.properties","hive.fs.s3n.impl=com.qubole.rubix.presto.CachingPrestoS3FileSystem", True)
         append("/usr/lib/presto/etc/catalog/hive.properties","hive.fs.s3.impl=com.qubole.rubix.presto.CachingPrestoS3FileSystem", True)
         append("/usr/lib/presto/etc/catalog/hive.properties","hive.fs.s3a.impl=com.qubole.rubix.presto.CachingPrestoS3FileSystem", True)
+        append("/usr/lib/presto/etc/catalog/hive.properties","hive.fs.rubix.impl=com.qubole.rubix.presto.CachingPrestoS3FileSystem", True)
         sudo("chmod +x /usr/lib/rubix/bin/configure.sh")
         sudo("/usr/lib/rubix/bin/configure.sh")
