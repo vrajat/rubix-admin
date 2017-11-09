@@ -42,10 +42,12 @@ class Installer:
             sudo('wget https://transfer.sh/SH4GH/qubole-rubix-0.2.13-SNAPSHOT20171109001211.noarch.rpm -O /tmp/qubole-rubix-0.2.13-SNAPSHOT20171109001211.noarch')
             rpm_path = ["/tmp/qubole-rubix-0.2.13-SNAPSHOT20171109001211.noarch"]
 
+        return rpm_path
+
     @classmethod
     def _scp(cls, args):
         remote_packages_path = args.config["remote_packages_path"]
-        rpm_path = get_rpm_path
+        rpm_path = get_rpm_path(args)
         for rpm in rpm_path:
             if not os.path.isfile(rpm):
                 abort('RPM file not found at %s.' % rpm)
@@ -63,7 +65,7 @@ class Installer:
     @classmethod
     def _rpm_install(cls, args):
         rpm_path = get_rpm_path(args)
-         for rpm in rpm_path:
+        for rpm in rpm_path:
              logging.info("Installing package %s" % rpm)
              sudo('rpm -U %s %s' %
                 (args.rpm_args,
