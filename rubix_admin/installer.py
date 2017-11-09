@@ -17,7 +17,7 @@ class Installer:
 
         cls.install_parser = cls.sub_parser.add_parser("install",
                                                        help="Install from RPM")
-        cls.install_parser.add_argument("-r", "--rpm", nargs='+', required=True,
+        cls.install_parser.add_argument("-r", "--rpm", nargs='+',
                                         help="Path to RPM file(s)")
         cls.install_parser.add_argument("-a", "--rpm-args", default="--ignoreos",
                                         help="Arguments to rpm command")
@@ -34,10 +34,19 @@ class Installer:
         cls._rpm_install(args)
         cls._rubix_op(args)
 
+    def get_rpm_path(self, args):
+        rpm_path = []
+        if args.rpm is not None:
+            rpm_path = args.rpm
+        else:
+            sudo('wget https://app.box.com/s/ocpcnqbxbja4b0bi7sd21nxab53spdj0 -O /tmp/qubole-rubix-0.2.13-SNAPSHOT20171109001211.noarch')
+            rpm_path = ["/tmp/qubole-rubix-0.2.13-SNAPSHOT20171109001211.noarch"]
+
     @classmethod
     def _scp(cls, args):
         remote_packages_path = args.config["remote_packages_path"]
-        for rpm in args.rpm:
+        rpm_path = get_rpm_path
+        for rpm in rpm_path:
             if not os.path.isfile(rpm):
                 abort('RPM file not found at %s.' % rpm)
 
@@ -53,7 +62,8 @@ class Installer:
 
     @classmethod
     def _rpm_install(cls, args):
-         for rpm in args.rpm:
+        rpm_path = get_rpm_path(args)
+         for rpm in rpm_path:
              logging.info("Installing package %s" % rpm)
              sudo('rpm -U %s %s' %
                 (args.rpm_args,
