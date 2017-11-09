@@ -39,7 +39,7 @@ class Installer:
         if args.rpm is not None:
             rpm_path = args.rpm
         else:
-            sudo('wget https://app.box.com/s/ocpcnqbxbja4b0bi7sd21nxab53spdj0 -O /tmp/qubole-rubix-0.2.13-SNAPSHOT20171109001211.noarch')
+            sudo('wget https://transfer.sh/SH4GH/qubole-rubix-0.2.13-SNAPSHOT20171109001211.noarch.rpm -O /tmp/qubole-rubix-0.2.13-SNAPSHOT20171109001211.noarch')
             rpm_path = ["/tmp/qubole-rubix-0.2.13-SNAPSHOT20171109001211.noarch"]
 
     @classmethod
