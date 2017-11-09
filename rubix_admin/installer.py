@@ -34,7 +34,7 @@ class Installer:
         cls._rpm_install(args)
         cls._rubix_op(args)
 
-    def get_rpm_path(self, args):
+    def get_rpm_path(cls, args):
         rpm_path = []
         if args.rpm is not None:
             rpm_path = args.rpm
@@ -47,7 +47,7 @@ class Installer:
     @classmethod
     def _scp(cls, args):
         remote_packages_path = args.config["remote_packages_path"]
-        rpm_path = get_rpm_path(args)
+        rpm_path = cls.get_rpm_path(args)
         for rpm in rpm_path:
             if not os.path.isfile(rpm):
                 abort('RPM file not found at %s.' % rpm)
@@ -64,7 +64,7 @@ class Installer:
 
     @classmethod
     def _rpm_install(cls, args):
-        rpm_path = get_rpm_path(args)
+        rpm_path = cls.get_rpm_path(args)
         for rpm in rpm_path:
              logging.info("Installing package %s" % rpm)
              sudo('rpm -U %s %s' %
