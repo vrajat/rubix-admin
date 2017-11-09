@@ -34,6 +34,7 @@ class Installer:
         cls._rpm_install(args)
         cls._rubix_op(args)
 
+    @classmethod
     def get_rpm_path(cls, args):
         rpm_path = []
         if args.rpm is not None:
