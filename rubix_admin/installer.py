@@ -21,6 +21,8 @@ class Installer:
                                         help="Path to RPM file(s)")
         cls.install_parser.add_argument("-a", "--rpm-args", default="--ignoreos",
                                         help="Arguments to rpm command")
+        cls.install_parser.add_argument("-v", "--rpm-version", default="stable",
+                                        help="Rubix rpm version")
         cls.install_parser.set_defaults(func=cls.install_cmd)
 
     @classmethod
@@ -40,8 +42,9 @@ class Installer:
         if args.rpm is not None:
             rpm_path = args.rpm
         else:
-            sudo('wget https://transfer.sh/SH4GH/qubole-rubix-0.2.13-SNAPSHOT20171109001211.noarch.rpm -O /tmp/qubole-rubix-0.2.13-SNAPSHOT20171109001211.noarch')
-            rpm_path = ["/tmp/qubole-rubix-0.2.13-SNAPSHOT20171109001211.noarch"]
+            rpm_file_name = "qubole-rubix-" + args.rpm_version + ".noarch.rpm"
+            sudo('wget https://s3.amazonaws.com/public-qubole/rubix/rpms/' + rpm_file_name + ' -O /tmp/' + rpm_file_name)
+            rpm_path = ["/tmp/" + rpm_file_name]
 
         return rpm_path
 
