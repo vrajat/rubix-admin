@@ -42,6 +42,7 @@ class Installer:
         if args.rpm is not None:
             rpm_path = args.rpm
         else:
+            logging.info("Installing Rubix from default location")
             rpm_file_name = "qubole-rubix-" + args.rpm_version + ".noarch.rpm"
             sudo('wget https://s3.amazonaws.com/public-qubole/rubix/rpms/' + rpm_file_name + ' -O /tmp/' + rpm_file_name)
             rpm_path = ["/tmp/" + rpm_file_name]
