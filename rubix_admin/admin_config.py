@@ -1,3 +1,4 @@
+
 import logging
 import yaml
 import os
@@ -8,7 +9,8 @@ class AdminConfig:
     default_path = "~/.radminrc"
     defaults = {
         "remote_packages_path": "/tmp/rubix_rpms",
-        "hosts": ["localhost"]
+        "coordinator": ["localhost"]
+        "workers": ["ec2-18-219-212-245.us-east-2.compute.amazonaws.com"]
     }
 
     @classmethod
