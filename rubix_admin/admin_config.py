@@ -10,7 +10,7 @@ class AdminConfig:
     defaults = {
         "remote_packages_path": "/tmp/rubix_rpms",
         "coordinator": ["localhost"]
-        "workers": ["ec2-18-219-212-245.us-east-2.compute.amazonaws.com"]
+        "workers": [""]
     }
 
     @classmethod
