@@ -1,4 +1,3 @@
-
 import logging
 
 from fabric.operations import sudo
