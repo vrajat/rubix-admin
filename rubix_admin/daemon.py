@@ -42,4 +42,3 @@ class Daemon:
     @classmethod
     def service(cls, action, is_master):
         return sudo("/etc/init.d/rubix.service %s %s" % (action,is_master))
-
