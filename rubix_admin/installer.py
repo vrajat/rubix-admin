@@ -23,6 +23,7 @@ class Installer:
                                         help="Arguments to rpm command")
         cls.install_parser.add_argument("-v", "--rpm-version", default="stable",
                                         help="Rubix rpm version")
+        ls.install_parser.add_argument("-pd", "--presto-plugin-directory", default="/usr/lib/presto/plugin/hive-hadoop2/", help = "Presto plugin directory")
         cls.install_parser.set_defaults(func=cls.install_cmd)
 
     @classmethod
@@ -79,7 +80,7 @@ class Installer:
 
     @classmethod
     def _rubix_op(cls, args):
-        sudo("cp -a /usr/lib/rubix/lib/* /usr/lib/presto/plugin/hive-hadoop2/")
+        sudo("cp -a /usr/lib/rubix/lib/* " + args.presto-plugin-directory)
         sudo("cp -a /usr/lib/rubix/lib/* /usr/lib/hadoop/lib/")
         sudo("mkdir -p /mnt/rubix/")
         sudo("mkdir -p /var/lib/rubix/cache")
