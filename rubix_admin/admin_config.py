@@ -8,7 +8,7 @@ class AdminConfig:
     default_path = "~/.radminrc"
     defaults = {
         "remote_packages_path": "/tmp/rubix_rpms",
-        "coordinator": ["localhost"]
+        "coordinator": ["localhost"],
         "workers": [""]
     }
 
