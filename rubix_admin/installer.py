@@ -88,6 +88,8 @@ class Installer:
         sudo("/usr/lib/rubix/bin/configure-rubix.sh")
 
         cluster_type = args.cluster_type
-        if not (is_master is False and cluster_type == "spark"):
-            # Only run configure script if not on a Spark worker node
-            sudo("/usr/lib/rubix/bin/configure-%s.sh" % cluster_type)
+        if cluster_type == "presto":
+            sudo("/usr/lib/rubix/bin/configure-presto.sh")
+        elif cluster_type == "spark":
+            if is_master:
+                sudo("/usr/lib/rubix/bin/configure-spark.sh")
