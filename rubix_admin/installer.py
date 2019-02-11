@@ -75,6 +75,8 @@ class Installer:
             cxn.put(rpm, preserve_mode=True)
             # Copy from home (~) to specified path
             cxn.sudo("cp %s %s" % (os.path.basename(rpm), remote_packages_path))
+            # Remove from home (~)
+            cxn.sudo("rm %s" % os.path.basename(rpm))
 
     @classmethod
     def _rpm_install(cls, cxn, args):
