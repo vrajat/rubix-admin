@@ -9,6 +9,7 @@ RubiX Admin should be installed on the Presto/Spark/Hadoop2 cluster master node.
 ### From Source
 
     git clone https://github.com/qubole/rubix-admin.git
+    cd rubix-admin
     virtualenv venv
     source venv/bin/activate
     python setup.py install
